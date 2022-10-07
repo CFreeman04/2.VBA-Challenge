@@ -1,4 +1,3 @@
-Attribute VB_Name = "Module2"
 Sub StockMarket5()
 ' Create a script that loops through all the stocks for one year and outputs the following information:
 '   * The ticker symbol.
@@ -50,14 +49,12 @@ Sub StockMarket5()
         TickerGreatestDecrease = "":        TickerGreatestDecreaseValue = 10000
         TickerGreatestVolume = "":          TickerGreatestVolumeValue = -1
         
+        'Initialize TickerOpen value
+        TickerOpen = Cells(2, 3)
+        
         ' Cycle through each row
         For rowcounter = 2 To LastRow
-            If rowcounter = 2 Then
-                Ticker = Cells(rowcounter, 1)
-                TickerOpen = Cells(rowcounter, 3)
-            End If
-            
-            ' Determine if row is last row for specific Ticker
+            ' Determine if row is last row for specific Ticker (Look Ahead)
             If Cells(rowcounter + 1, 1) <> Cells(rowcounter, 1) Then
                 Ticker = Cells(rowcounter, 1)
                 TickerClose = Cells(rowcounter, 6)
@@ -91,15 +88,16 @@ Sub StockMarket5()
                 TickerOpen = Cells(rowcounter + 1, 3)   ' Get Open Value for new Ticker
                 
                 TickerVolume = 0    ' Reset volume to 0
-                
-            End If
+            Else
             
-            TickerVolume = TickerVolume + Cells(rowcounter, 7)
+                TickerVolume = TickerVolume + Cells(rowcounter, 7)
         
+            End If
         Next rowcounter
         
+        'Format Percent Cells
         Range("K:K,Q2:Q3").NumberFormat = "0.00%"
-        
+
         'Display Greatest _________ Information & Titles
         Cells(1, 16) = "Ticker": Cells(1, 17) = "Value"
         
@@ -133,6 +131,3 @@ Sub StockMarket5()
     
     Application.ScreenUpdating = True ' Reset screen updating to default
 End Sub
-
-
-
